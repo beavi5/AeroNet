@@ -59,15 +59,6 @@ volatile static String chain="";
 
 
 
-       // holes [1][1]=1;
-        //holes [3][0]=1;
-
-
-      //  wallsVertical[0][2]=true;
-        //wallsHorizontal[1][0]=true;
-
-        //balls.add(new Ball(0,0));
-       // balls.add(new Ball(2,3));
 
         Thread thread1 = new MyThread(count, copyBallsArr(balls),RIGHT,"");
         Thread thread2 = new MyThread(count,copyBallsArr(balls),LEFT,"");
@@ -81,7 +72,6 @@ volatile static String chain="";
         thread2.join();
         thread3.join();
         thread4.join();
-       // Thread.sleep(4000);
         System.out.println("Минимальное количество ходов: "+count);
         System.out.println("Последовательность ходов: "+chain);
 
@@ -119,30 +109,19 @@ class MyThread extends Thread
 
         synchronized (Main.count) {
             if (Main.count != 0 && count>Main.count) {return;} //условие выхода: счетчик ходов больше минимального решения
-     //   }
 
 
 
-                 //условие выхода: количество шаров = 0
-   //     synchronized (Main.count) {
             if (balls.size()<=0) {
             if (Main.count == 0) { Main.count=count;
               Main.chain=chain;
-            //System.out.println(chain);
             }
             else if (count<Main.count ) {Main.count=count;
-               // System.out.println(count);
                 Main.chain=chain;
 
             }
                 return;}
         }
-
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
 
         switch (to){
             case RIGHT:   //смещение слева направо
@@ -151,21 +130,18 @@ class MyThread extends Thread
                                for (Ball ball : balls) {
 
                                    outer:     for (int i = ball.getY(); i < SIZE; i++) {
-                        //  if (holes[ball.getX()][i]) {ball.setY(i); break;}
                         if (Main.wallsVertical[ball.getX()]
                                 [i]) {
                             ball.setY(i);
 
                         if (Main.holes[ball.getX()][i]!=0) {
                            balls.remove(ball);
-                        //    System.out.println("AAAAAAAAAAA!");
 
                         }
                             break outer;
                         }
                         else if (Main.holes[ball.getX()][i]!=0) {
                             balls.remove(ball);
-                         //   System.out.println("AAAAAAAAAAA!");
                             break outer;
                         }
 
@@ -202,12 +178,10 @@ class MyThread extends Thread
 
                         if (Main.holes[ball.getX()][i]!=0) {
                             balls.remove(ball);
-                          //  System.out.println("AAAAAAAAAAA!");
                         }
                             break;}
                         else if (Main.holes[ball.getX()][i]!=0) {
                             balls.remove(ball);
-                         //   System.out.println("AAAAAAAAAAA!");
                             break;
                         }
 
@@ -243,13 +217,11 @@ class MyThread extends Thread
                             ball.setX(i);
                         if (Main.holes[i][ball.getY()]!=0) {
                             balls.remove(ball);
-                           // System.out.println("AAAAAAAAAAA!");
                             break;
                         }
                             break;}
                         else if (Main.holes[i][ball.getY()]!=0) {
                             balls.remove(ball);
-                          //  System.out.println("AAAAAAAAAAA!");
                             break;
                         }
 
@@ -286,13 +258,11 @@ class MyThread extends Thread
                             ball.setX(i+1);
                             if (Main.holes[i][ball.getY()]!=0) {
                                 balls.remove(ball);
-                                // System.out.println("AAAAAAAAAAA!");
                                 break;
                             }
                             break;}
                         else if (Main.holes[i][ball.getY()]!=0) {
                             balls.remove(ball);
-                            //  System.out.println("AAAAAAAAAAA!");
                             break;
                         }
 
@@ -302,7 +272,6 @@ class MyThread extends Thread
 
                 }
                 for (Ball ball : balls) {
-                //    System.out.println(Thread.currentThread().getName()+"--- "+ball.getX()+" "+ ball.getY() +"   smesh "+to);
                 }
 
              Thread    thread1 = new MyThread(count+1, copyBallsArr(balls), RIGHT,chain);
@@ -325,14 +294,7 @@ class MyThread extends Thread
 
 
         for (Ball ball : balls) {
-          //  System.out.println(Thread.currentThread().getName()+"--- "+ball.getX()+" "+ ball.getY() +"   smesh "+to);
         }
-
-//        try {
-//            Thread.sleep(6000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
 
     }
 }
